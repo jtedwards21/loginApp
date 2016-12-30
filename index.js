@@ -11,6 +11,27 @@ import Logout from './modules/Logout'
 import Dashboard from './modules/Dashboard'
 import auth from './public/auth'
 import requireAuth from './public/requireAuth'
+import axios from 'axios'
+
+var getToken = function(){
+    var id='YMRwFiiXGc0SzZ249SVYqg';
+    var secret='YWra9IEwLV4reDy4r1R7cpGwINrmdgEm1F9xI5sxowQRCdUEjlgRVFwLevzwdA4J';
+    var url='https://api.yelp.com/oauth2/token';
+    
+    axios({
+	method:'post',
+	url:url,
+	data: {grant_type:'client_credientals',
+	  client_id:id,
+	  client_secret:secret
+        }
+     })
+    .then(function (response) {
+      console.log('hello');
+    })
+  
+}();
+
 
 render((
   <Router history={browserHistory}>
@@ -22,7 +43,7 @@ render((
       <Route path="/repos" component={Repos}>
         <Route path="/repos/:userName/:repoName" component={Repo}/>
       </Route>
-      <Route path="/about" component={About}/>
+      <Route token={getToken} path="/about"component={About}/>
     </Route>
   </Router>
 ), document.getElementById('app'))

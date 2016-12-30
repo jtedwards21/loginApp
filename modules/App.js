@@ -2,19 +2,17 @@ import React from 'react'
 import NavLink from './NavLink'
 import auth from './../public/auth'
 import { Link } from 'react-router'
+import axios from 'axios'
 
 export default React.createClass({
 　　getInitialState(){
-    return {loggedIn: auth.loggedIn()}
+    return {loggedIn: auth.loggedIn(), token: {}}
   },
   
   updateAuth(loggedIn){
     this.setState({loggedIn});
   },
-
-  componentWillMount(){
-    auth.onChange = this.updateAuth;
-    auth.login();
+  componentDidMount(){
   },
   
   render() {
@@ -35,6 +33,7 @@ export default React.createClass({
           <li><NavLink to="/about">About</NavLink></li>
           <li><NavLink to="/repos">Repos</NavLink></li>
         </ul>
+	{this.state.response}
         {this.props.children}
       </div>
     )
