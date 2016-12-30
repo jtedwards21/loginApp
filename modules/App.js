@@ -20,6 +20,7 @@ export default React.createClass({
       <div>
         <h1>React Router Login</h1>
 	<ul>
+	　　<Link to="/signup">Sign up</Link>
 	  {this.state.loggedIn ? (
 	  <Link to="/logout">Log out</Link>
 	) : (

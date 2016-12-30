@@ -30,7 +30,7 @@ app.get('/yelp/search/', function (req, res) {
     var baseUrl = 'https://api.yelp.com/v3/businesses/search';
 
     var options = {
-      url: 'https://api.yelp.com/v3/businesses/search?term=food&latitude=37.786882&longitude=-122.399972',
+      url: 'https://api.yelp.com/v3/businesses/search?term=food&latitude=37.786882&longitude=-122.399972',	
       headers: {
         'Authorization': 'Bearer qTUxsA2qrcRHmShGCMWtfjlfSbg_p-smWEWHyRAAZxJSgP2hMqw-h0jQvbpNU9nxPLP9JettTNEm_9313SucHlYB0yj1GvlM1lsU1O7adxzhwRuYJWDh7sP1px9mWHYx'
        }
@@ -39,12 +39,12 @@ app.get('/yelp/search/', function (req, res) {
     var callback = function(err, httpResponse, body){
       res.send(body)
     };
-
+    console.log('r');
     request(options, callback);
 })
 
 // send all requests to index.html so browserHistory works
-app.get('/*', function (req, res) {
+app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
