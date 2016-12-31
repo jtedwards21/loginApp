@@ -29,6 +29,10 @@ body {
   font-family: Jambo;
 }
 
+#glass {
+  color: purple;
+}
+
 #nav-container {
   position: absolute;
 }
