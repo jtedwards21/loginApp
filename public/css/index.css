@@ -25,6 +25,10 @@ body {
   height: 100%
 }
 
+#main-container {
+  width:　70%;
+}
+
 #title {
   font-family: Jambo;
 }
@@ -38,15 +42,8 @@ body {
   margin-bottom: 20px;
 }
 
-#nav-container {
-  position: absolute;
-}
 
 #nav {
-  float: right;
-  margin-right: 20px;
+　　background-color: blue;
 }
 
-#nav a {
-  margin-right: 20px;
-}

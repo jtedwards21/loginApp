@@ -19,8 +19,9 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <NavBar loggedIn={this.state.loggedIn} />
-      <div className="container">
+        
+      <div id="main-container" className="container">
+<NavBar loggedIn={this.state.loggedIn} />
       <div className="row">
         <h1 id="title" className="text-center col-sm-12">What's Goin' On Tonight?</h1>
         {this.props.children}
