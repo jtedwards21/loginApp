@@ -58,27 +58,27 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _About = __webpack_require__(251);
+	var _About = __webpack_require__(227);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _Home = __webpack_require__(252);
+	var _Home = __webpack_require__(253);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Login = __webpack_require__(254);
+	var _Login = __webpack_require__(255);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Logout = __webpack_require__(255);
+	var _Logout = __webpack_require__(256);
 
 	var _Logout2 = _interopRequireDefault(_Logout);
 
-	var _Signup = __webpack_require__(256);
+	var _Signup = __webpack_require__(257);
 
 	var _Signup2 = _interopRequireDefault(_Signup);
 
-	var _Dashboard = __webpack_require__(257);
+	var _Dashboard = __webpack_require__(258);
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
@@ -86,32 +86,15 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _requireAuth = __webpack_require__(258);
+	var _requireAuth = __webpack_require__(259);
 
 	var _requireAuth2 = _interopRequireDefault(_requireAuth);
 
-	var _axios = __webpack_require__(225);
+	var _axios = __webpack_require__(228);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var getToken = function () {
-	  var id = 'YMRwFiiXGc0SzZ249SVYqg';
-	  var secret = 'YWra9IEwLV4reDy4r1R7cpGwINrmdgEm1F9xI5sxowQRCdUEjlgRVFwLevzwdA4J';
-	  var url = 'https://api.yelp.com/oauth2/token';
-
-	  (0, _axios2.default)({
-	    method: 'post',
-	    url: url,
-	    data: { grant_type: 'client_credientals',
-	      client_id: id,
-	      client_secret: secret
-	    }
-	  }).then(function (response) {
-	    console.log('hello');
-	  });
-	}();
 
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRouter.Router,
@@ -125,7 +108,7 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/logout', component: _Logout2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _Dashboard2.default, onEnter: _requireAuth2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { token: getToken, path: '/about', component: _About2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default })
 	  )
 	), document.getElementById('app'));
 
@@ -25499,48 +25482,26 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _axios = __webpack_require__(225);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _NavBar = __webpack_require__(250);
+	var _NavBar = __webpack_require__(225);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
+
+	var _Footer = __webpack_require__(226);
+
+	var _Footer2 = _interopRequireDefault(_Footer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
 	  displayName: 'App',
 	  getInitialState: function getInitialState() {
-	    return { loggedIn: _auth2.default.loggedIn(), places: {} };
+	    return { loggedIn: _auth2.default.loggedIn() };
 	  },
 	  updateAuth: function updateAuth(loggedIn) {
 	    this.setState({ loggedIn: loggedIn });
 	  },
-	  getPlaces: function getPlaces(token) {
-	    var url = '/yelp/search/' + token;
-
-	    var callback = function callback(data) {
-	      console.log(data);
-	    };
-
-	    (0, _axios2.default)(url).then(function (data) {
-	      callback(data);
-	    });
-	  },
-	  componentDidMount: function componentDidMount() {
-	    var url = '/yelp/token';
-	    var that = this;
-	    var callback = function callback(data) {
-	      var token = data.data.access_token;
-	      that.getPlaces(token);
-	    };
-
-	    (0, _axios2.default)(url).then(function (data) {
-	      callback(data);
-	    });
-	  },
 	  render: function render() {
+	    console.log(this.props.children);
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -25558,7 +25519,8 @@
 	          ),
 	          this.props.children
 	        )
-	      )
+	      ),
+	      _react2.default.createElement(_Footer2.default, null)
 	    );
 	  }
 	});
@@ -25649,7 +25611,221 @@
 /* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(226);
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(159);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'NavBar',
+	  getInitialState: function getInitialState() {
+	    return {};
+	  },
+	  render: function render() {
+	    var loginLink;
+	    if (this.props.loggedIn) {
+	      loginLink = _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/logout' },
+	          'Log out'
+	        )
+	      );
+	    } else {
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/login' },
+	          'Sign in'
+	        )
+	      );
+	    }
+
+	    return _react2.default.createElement(
+	      'nav',
+	      { className: 'navbar navbar-default\u3000navbar-fixed-top' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'container-fluid' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'navbar-header' },
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'sr-only' },
+	              'Toggle navigation'
+	            ),
+	            _react2.default.createElement('span', { className: 'icon-bar' }),
+	            _react2.default.createElement('span', { className: 'icon-bar' }),
+	            _react2.default.createElement('span', { className: 'icon-bar' })
+	          ),
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { className: 'navbar-brand', to: '/' },
+	            _react2.default.createElement('span', { id: 'glass', className: 'glyphicon glyphicon-glass' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+	          _react2.default.createElement(
+	            'ul',
+	            { className: 'nav navbar-nav' },
+	            _react2.default.createElement(
+	              'li',
+	              { className: 'active' },
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/about' },
+	                'About ',
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'sr-only' },
+	                  '(current)'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/dashboard', href: '#' },
+	                'Dashboard'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              { className: 'dropdown' },
+	              _react2.default.createElement(
+	                'a',
+	                { href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+	                'Dropdown ',
+	                _react2.default.createElement('span', { className: 'caret' })
+	              ),
+	              _react2.default.createElement(
+	                'ul',
+	                { className: 'dropdown-menu' },
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Action'
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Another action'
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Something else here'
+	                  )
+	                ),
+	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Separated link'
+	                  )
+	                ),
+	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'One more separated link'
+	                  )
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            { className: 'nav navbar-nav navbar-right' },
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              _react2.default.createElement(
+	                'a',
+	                { href: '#' },
+	                'Link'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              { className: 'dropdown' },
+	              _react2.default.createElement(
+	                'a',
+	                { href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-menu-hamburger' }),
+	                ' ',
+	                _react2.default.createElement('span', { className: 'caret' })
+	              ),
+	              _react2.default.createElement(
+	                'ul',
+	                { className: 'dropdown-menu' },
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/signup' },
+	                    'Sign Up'
+	                  )
+	                ),
+	                '\u3000\u3000\u3000\u3000',
+	                loginLink,
+	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Separated link'
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
 
 /***/ },
 /* 226 */
@@ -25657,10 +25833,81 @@
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
-	var bind = __webpack_require__(228);
-	var Axios = __webpack_require__(229);
-	var defaults = __webpack_require__(230);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'Footer',
+	  getInitialState: function getInitialState() {
+	    return {};
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'footer',
+	      { id: 'footer' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'container center-text' },
+	        'A Footer'
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 227 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _axios = __webpack_require__(228);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'About',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'About'
+	    );
+	  }
+	});
+
+/***/ },
+/* 228 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(229);
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var utils = __webpack_require__(230);
+	var bind = __webpack_require__(231);
+	var Axios = __webpack_require__(232);
+	var defaults = __webpack_require__(233);
 
 	/**
 	 * Create an instance of Axios
@@ -25693,15 +25940,15 @@
 	};
 
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(247);
-	axios.CancelToken = __webpack_require__(248);
-	axios.isCancel = __webpack_require__(244);
+	axios.Cancel = __webpack_require__(250);
+	axios.CancelToken = __webpack_require__(251);
+	axios.isCancel = __webpack_require__(247);
 
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(249);
+	axios.spread = __webpack_require__(252);
 
 	module.exports = axios;
 
@@ -25710,12 +25957,12 @@
 
 
 /***/ },
-/* 227 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(228);
+	var bind = __webpack_require__(231);
 
 	/*global toString:true*/
 
@@ -26015,7 +26262,7 @@
 
 
 /***/ },
-/* 228 */
+/* 231 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26032,17 +26279,17 @@
 
 
 /***/ },
-/* 229 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(230);
-	var utils = __webpack_require__(227);
-	var InterceptorManager = __webpack_require__(241);
-	var dispatchRequest = __webpack_require__(242);
-	var isAbsoluteURL = __webpack_require__(245);
-	var combineURLs = __webpack_require__(246);
+	var defaults = __webpack_require__(233);
+	var utils = __webpack_require__(230);
+	var InterceptorManager = __webpack_require__(244);
+	var dispatchRequest = __webpack_require__(245);
+	var isAbsoluteURL = __webpack_require__(248);
+	var combineURLs = __webpack_require__(249);
 
 	/**
 	 * Create a new instance of Axios
@@ -26123,13 +26370,13 @@
 
 
 /***/ },
-/* 230 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(227);
-	var normalizeHeaderName = __webpack_require__(231);
+	var utils = __webpack_require__(230);
+	var normalizeHeaderName = __webpack_require__(234);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -26146,10 +26393,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(232);
+	    adapter = __webpack_require__(235);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(232);
+	    adapter = __webpack_require__(235);
 	  }
 	  return adapter;
 	}
@@ -26223,12 +26470,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 231 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(230);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -26241,18 +26488,18 @@
 
 
 /***/ },
-/* 232 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(227);
-	var settle = __webpack_require__(233);
-	var buildURL = __webpack_require__(236);
-	var parseHeaders = __webpack_require__(237);
-	var isURLSameOrigin = __webpack_require__(238);
-	var createError = __webpack_require__(234);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(239);
+	var utils = __webpack_require__(230);
+	var settle = __webpack_require__(236);
+	var buildURL = __webpack_require__(239);
+	var parseHeaders = __webpack_require__(240);
+	var isURLSameOrigin = __webpack_require__(241);
+	var createError = __webpack_require__(237);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(242);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -26348,7 +26595,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(240);
+	      var cookies = __webpack_require__(243);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -26425,12 +26672,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 233 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(234);
+	var createError = __webpack_require__(237);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -26456,12 +26703,12 @@
 
 
 /***/ },
-/* 234 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(235);
+	var enhanceError = __webpack_require__(238);
 
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -26479,7 +26726,7 @@
 
 
 /***/ },
-/* 235 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26504,12 +26751,12 @@
 
 
 /***/ },
-/* 236 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(230);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -26578,12 +26825,12 @@
 
 
 /***/ },
-/* 237 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(230);
 
 	/**
 	 * Parse headers into an object
@@ -26621,12 +26868,12 @@
 
 
 /***/ },
-/* 238 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(230);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -26695,7 +26942,7 @@
 
 
 /***/ },
-/* 239 */
+/* 242 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26737,12 +26984,12 @@
 
 
 /***/ },
-/* 240 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(230);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -26796,12 +27043,12 @@
 
 
 /***/ },
-/* 241 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(230);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -26854,15 +27101,15 @@
 
 
 /***/ },
-/* 242 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
-	var transformData = __webpack_require__(243);
-	var isCancel = __webpack_require__(244);
-	var defaults = __webpack_require__(230);
+	var utils = __webpack_require__(230);
+	var transformData = __webpack_require__(246);
+	var isCancel = __webpack_require__(247);
+	var defaults = __webpack_require__(233);
 
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -26939,12 +27186,12 @@
 
 
 /***/ },
-/* 243 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(230);
 
 	/**
 	 * Transform the data for a request or a response
@@ -26965,7 +27212,7 @@
 
 
 /***/ },
-/* 244 */
+/* 247 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26976,7 +27223,7 @@
 
 
 /***/ },
-/* 245 */
+/* 248 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26996,7 +27243,7 @@
 
 
 /***/ },
-/* 246 */
+/* 249 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27014,7 +27261,7 @@
 
 
 /***/ },
-/* 247 */
+/* 250 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27039,12 +27286,12 @@
 
 
 /***/ },
-/* 248 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Cancel = __webpack_require__(247);
+	var Cancel = __webpack_require__(250);
 
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -27102,7 +27349,7 @@
 
 
 /***/ },
-/* 249 */
+/* 252 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27135,299 +27382,6 @@
 
 
 /***/ },
-/* 250 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(159);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-	  displayName: 'NavBar',
-	  getInitialState: function getInitialState() {
-	    return {};
-	  },
-	  render: function render() {
-	    var loginLink;
-	    if (this.props.loggedIn) {
-	      loginLink = _react2.default.createElement(
-	        'li',
-	        null,
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/logout' },
-	          'Log out'
-	        )
-	      );
-	    } else {
-	      _react2.default.createElement(
-	        'li',
-	        null,
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/login' },
-	          'Sign in'
-	        )
-	      );
-	    }
-
-	    return _react2.default.createElement(
-	      'nav',
-	      { className: 'navbar navbar-default\u3000navbar-fixed-top' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'container-fluid' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'navbar-header' },
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'sr-only' },
-	              'Toggle navigation'
-	            ),
-	            _react2.default.createElement('span', { className: 'icon-bar' }),
-	            _react2.default.createElement('span', { className: 'icon-bar' }),
-	            _react2.default.createElement('span', { className: 'icon-bar' })
-	          ),
-	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { className: 'navbar-brand', to: '/' },
-	            _react2.default.createElement('span', { id: 'glass', className: 'glyphicon glyphicon-glass' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
-	          _react2.default.createElement(
-	            'ul',
-	            { className: 'nav navbar-nav' },
-	            _react2.default.createElement(
-	              'li',
-	              { className: 'active' },
-	              _react2.default.createElement(
-	                _reactRouter.Link,
-	                { to: '/about' },
-	                'About ',
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'sr-only' },
-	                  '(current)'
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              _react2.default.createElement(
-	                _reactRouter.Link,
-	                { to: '/dashboard', href: '#' },
-	                'Dashboard'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              { className: 'dropdown' },
-	              _react2.default.createElement(
-	                'a',
-	                { href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
-	                'Dropdown ',
-	                _react2.default.createElement('span', { className: 'caret' })
-	              ),
-	              _react2.default.createElement(
-	                'ul',
-	                { className: 'dropdown-menu' },
-	                _react2.default.createElement(
-	                  'li',
-	                  null,
-	                  _react2.default.createElement(
-	                    'a',
-	                    { href: '#' },
-	                    'Action'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'li',
-	                  null,
-	                  _react2.default.createElement(
-	                    'a',
-	                    { href: '#' },
-	                    'Another action'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'li',
-	                  null,
-	                  _react2.default.createElement(
-	                    'a',
-	                    { href: '#' },
-	                    'Something else here'
-	                  )
-	                ),
-	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
-	                _react2.default.createElement(
-	                  'li',
-	                  null,
-	                  _react2.default.createElement(
-	                    'a',
-	                    { href: '#' },
-	                    'Separated link'
-	                  )
-	                ),
-	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
-	                _react2.default.createElement(
-	                  'li',
-	                  null,
-	                  _react2.default.createElement(
-	                    'a',
-	                    { href: '#' },
-	                    'One more separated link'
-	                  )
-	                )
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'ul',
-	            { className: 'nav navbar-nav navbar-right' },
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              _react2.default.createElement(
-	                'a',
-	                { href: '#' },
-	                'Link'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              { className: 'dropdown' },
-	              _react2.default.createElement(
-	                'a',
-	                { href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
-	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-menu-hamburger' }),
-	                ' ',
-	                _react2.default.createElement('span', { className: 'caret' })
-	              ),
-	              _react2.default.createElement(
-	                'ul',
-	                { className: 'dropdown-menu' },
-	                _react2.default.createElement(
-	                  'li',
-	                  null,
-	                  _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: '/signup' },
-	                    'Sign Up'
-	                  )
-	                ),
-	                '\u3000\u3000\u3000\u3000',
-	                loginLink,
-	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
-	                _react2.default.createElement(
-	                  'li',
-	                  null,
-	                  _react2.default.createElement(
-	                    'a',
-	                    { href: '#' },
-	                    'Separated link'
-	                  )
-	                )
-	              )
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-
-/***/ },
-/* 251 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _axios = __webpack_require__(225);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-	  displayName: 'About',
-	  render: function render() {
-	    console.log(this.props);
-	    console.log('l');
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'About'
-	    );
-	  }
-	});
-
-/***/ },
-/* 252 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Place = __webpack_require__(253);
-
-	var _Place2 = _interopRequireDefault(_Place);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-	  displayName: 'Home',
-	  getInitialState: function getInitialState() {
-	    //Show some places
-	    return {};
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'col-sm-12', id: 'home' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'section-title text-center' },
-	        'Home'
-	      ),
-	      _react2.default.createElement('div', { id: 'places' })
-	    );
-	  }
-	});
-
-/***/ },
 /* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -27441,20 +27395,156 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Place = __webpack_require__(254);
+
+	var _Place2 = _interopRequireDefault(_Place);
+
+	var _axios = __webpack_require__(228);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
-	  displayName: 'Place',
+	  displayName: 'Home',
 	  getInitialState: function getInitialState() {
-	    return {};
+	    return { places: [] };
+	  },
+	  getPlaces: function getPlaces(token) {
+	    var url = '/yelp/search/' + token;
+	    var that = this;
+	    var callback = function callback(data) {
+	      var places = data.data.businesses;
+	      that.setState({ places: places });
+	    };
+
+	    (0, _axios2.default)(url).then(function (data) {
+	      callback(data);
+	    });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var url = '/yelp/token';
+	    var that = this;
+	    var callback = function callback(data) {
+	      var token = data.data.access_token;
+	      that.getPlaces(token);
+	    };
+
+	    (0, _axios2.default)(url).then(function (data) {
+	      callback(data);
+	    });
 	  },
 	  render: function render() {
-	    return _react2.default.createElement('div', null);
+	    console.log(this.state.places);
+	    var places = [];
+	    places = this.state.places.map(function (p, i) {
+	      return _react2.default.createElement(_Place2.default, { key: i, name: p.name, imageUrl: p.image_url, phone: p.display_phone, price: p.price });
+	    });
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'col-sm-12', id: 'home' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'section-title text-center' },
+	        'Home'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { id: 'places', className: 'col-sm-12' },
+	        places
+	      )
+	    );
 	  }
 	});
 
 /***/ },
 /* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+		displayName: "Place",
+		getInitialState: function getInitialState() {
+			return {};
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				"div",
+				{ className: "col-sm-12 place" },
+				_react2.default.createElement(
+					"div",
+					{ className: "col-sm-3" },
+					_react2.default.createElement("img", { className: "my-img-responsive center-block", src: this.props.imageUrl })
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "col-sm-3 place-info" },
+					_react2.default.createElement(
+						"div",
+						{ className: "col-sm-12 info-display" },
+						_react2.default.createElement(
+							"div",
+							{ className: "col-sm-3" },
+							"Name: "
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "col-sm-9" },
+							this.props.name
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "col-sm-12" },
+						_react2.default.createElement(
+							"div",
+							{ className: "col-sm-3" },
+							"Phone: "
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "col-sm-9" },
+							this.props.phone
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "col-sm-12" },
+						_react2.default.createElement(
+							"div",
+							{ className: "col-sm-3" },
+							"Price: "
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "col-sm-9" },
+							this.props.price
+						)
+					)
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "review" },
+					"Hello, this is a review."
+				),
+				"\u3000\u3000\u3000\u3000\u3000\u3000"
+			);
+		}
+	});
+
+/***/ },
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27533,7 +27623,7 @@
 	}));
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27563,7 +27653,7 @@
 	});
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27629,7 +27719,7 @@
 	});
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27676,7 +27766,7 @@
 	});
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
