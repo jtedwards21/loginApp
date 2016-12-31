@@ -8,6 +8,8 @@ import Login from './modules/Login'
 import Logout from './modules/Logout'
 import Signup from './modules/Signup'
 import Dashboard from './modules/Dashboard'
+import Goin from './modules/Goin'
+import UserInfo from './modules/UserInfo'
 import auth from './public/auth'
 import requireAuth from './public/requireAuth'
 import axios from 'axios'
@@ -21,7 +23,10 @@ render((
 　　　　　　<Route path="/signup" component={Signup} />
       <Route path="/login" component={Login}/>
       <Route path="/logout" component={Logout}/>
-      <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}/>
+      <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}>
+	<Route path="/userinfo" component={UserInfo} />
+	<Route path="/goin" component={Goin} />
+　　　　　　</Route>
       <Route path="/about"component={About}/>
     </Route>
   </Router>

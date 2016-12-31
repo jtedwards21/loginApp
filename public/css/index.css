@@ -20,6 +20,17 @@ body {
   background-color: black;
 }
 
+#dashboard {
+  height: 300px;
+}
+
+#dashboard-pills {
+
+}
+
+#home {
+  height: 300px;
+}
 
 .my-img-responsive {
   max-width: 100%;
@@ -35,6 +46,7 @@ body {
   background-color: white;
   width:　70%;
   margin-bottom: 50px;
+  padding-bottom: 20px;
 }
 
 #title {
@@ -44,6 +56,7 @@ body {
 #glass {
   color: purple;
 }
+
 
 .section-title{
   font-size: 2em;
