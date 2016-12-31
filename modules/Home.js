@@ -52,6 +52,7 @@ export default React.createClass({
 	  </div>
 	</div>
 	<div id="places" className="col-sm-12">
+	  <div id="loader" className="center-block"></div>
 	  {places}
 	</div>
 	<script>

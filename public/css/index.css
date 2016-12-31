@@ -21,6 +21,10 @@
   min-height: 200px;
   padding-left: 0px;
   padding-right: 0px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.32), 0 3px 12px 0 rgba(0, 0, 0, 0.24);
+  margin-bottom: 50px;
+  padding-bottom: 20px;
+  border-radius: 10px;
 }
 
 
@@ -54,6 +58,7 @@ nav {
   padding-right: 0px;
 }
 
+
 #signup-lead {
   background-color: #340040;
   height: 100px;
@@ -77,12 +82,7 @@ nav {
 }
 
 #main-container {
-  width:　70%;
   margin-top: 70px;
-  margin-bottom: 50px;
-  padding-bottom: 20px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.32), 0 3px 12px 0 rgba(0, 0, 0, 0.24);
-  border-radius: 10px;
 }
 
 #title {
