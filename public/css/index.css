@@ -16,8 +16,23 @@
   color: green;
 }
 
+#section {
+  background-color: white;
+  min-height: 200px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+
 body {
-  background-color: black;
+  background-color: #BA00E5;
+}
+
+nav {
+  background-color: #340040;
+  color: white;
+  position: fixed;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.32), 0 3px 12px 0 rgba(0, 0, 0, 0.24);
 }
 
 #dashboard {
@@ -35,6 +50,20 @@ body {
 
 #home {
   height: 300px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#signup-lead {
+  background-color: #340040;
+  height: 100px;
+  color: white;
+}
+
+.my-btn {
+  background-color: orange;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.32), 0 3px 12px 0 rgba(0, 0, 0, 0.24);
+  color: purple;
 }
 
 .my-img-responsive {
@@ -48,10 +77,12 @@ body {
 }
 
 #main-container {
-  background-color: white;
   width:　70%;
+  margin-top: 70px;
   margin-bottom: 50px;
   padding-bottom: 20px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.32), 0 3px 12px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 10px;
 }
 
 #title {
@@ -61,7 +92,6 @@ body {
 #glass {
   color: purple;
 }
-
 
 .section-title{
   font-size: 2em;

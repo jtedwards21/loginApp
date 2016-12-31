@@ -13,15 +13,17 @@ export default React.createClass({
     this.setState({loggedIn});
   },
   render() {
+    var thin = {width: "60%"};
 　　　　console.log(this.props.children);
     return (
       <div>
-        <div id="main-container" className="container">
-          <NavBar loggedIn={this.state.loggedIn} />	
+          <NavBar loggedIn={this.state.loggedIn} />
+        <div style={thin} id="main-container" className="container">	
           <div className="row">
             <h1 id="title" className="text-center col-sm-12">What's Goin' On Tonight?</h1>
-	
+	　　　 <div id="section" className="col-sm-12">
             {this.props.children}
+	    </div>
           </div>
         </div>
 	<Footer />

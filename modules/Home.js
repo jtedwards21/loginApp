@@ -18,6 +18,9 @@ export default React.createClass({
     .then(data => {callback(data)});
   },
   componentDidMount(){
+    var script = document.createElement('script');
+    script.src = './js/initSonic.js'
+    document.body.appendChild(script);
     var url = '/yelp/token';
     var that = this;
     var callback = function(data){
@@ -38,10 +41,25 @@ export default React.createClass({
     return (
       <div className="col-sm-12" id="home">
 	<div className="section-title text-center">Home</div>
+	<div className="col-sm-12" id="signup-lead">
+	　　<div className="col-sm-8">
+	    <div><span className="glyphicon glyphicon-thumbs-up"> Quickly </span></div>
+	    <div><span className="glyphicon glyphicon-thumbs-up"> Meet New People During You're Night</span></div>
+	    <div><span className="glyphicon glyphicon-thumbs-up"> Check out reviews of the best spots in your location</span></div>
+	  </div>
+	  <div className="col-sm-4">
+	    <div className="btn btn-lg my-btn">Register</div>
+	  </div>
+	</div>
 	<div id="places" className="col-sm-12">
 	  {places}
 	</div>
+	<script>
+	  
+        </script>
       </div>
     )
   }
 })
+
+
