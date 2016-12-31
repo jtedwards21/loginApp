@@ -1,3 +1,43 @@
+@font-face {
+  font-family: Jambo;
+  font-style: normal;
+  font-weight: normal;
+  src: url("Jambo.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Denominator;
+  font-style: normal;
+  font-weight: normal;
+  src: url("Denominator.ttf") format('truetype');
+}
+
 .active {
   color: green;
+}
+
+body {
+  background-color: black;
+}
+
+.container {
+  background-color: white;
+  height: 100%
+}
+
+#title {
+  font-family: Jambo;
+}
+
+#nav-container {
+  position: absolute;
+}
+
+#nav {
+  float: right;
+  margin-right: 20px;
+}
+
+#nav a {
+  margin-right: 20px;
 }
