@@ -22,10 +22,15 @@ body {
 
 #dashboard {
   height: 300px;
+　　display: flex;
 }
 
 #dashboard-pills {
+  display: inline;
+}
 
+#current-pill {
+  display: inline;
 }
 
 #home {
