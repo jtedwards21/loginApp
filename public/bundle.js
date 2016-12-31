@@ -82,7 +82,11 @@
 
 	var _Logout2 = _interopRequireDefault(_Logout);
 
-	var _Dashboard = __webpack_require__(256);
+	var _Signup = __webpack_require__(256);
+
+	var _Signup2 = _interopRequireDefault(_Signup);
+
+	var _Dashboard = __webpack_require__(257);
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
@@ -90,7 +94,7 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _requireAuth = __webpack_require__(257);
+	var _requireAuth = __webpack_require__(258);
 
 	var _requireAuth2 = _interopRequireDefault(_requireAuth);
 
@@ -124,6 +128,8 @@
 	    _reactRouter.Route,
 	    { path: '/', component: _App2.default },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
+	    '\u3000\u3000\u3000\u3000\u3000\u3000',
+	    _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _Signup2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/logout', component: _Logout2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _Dashboard2.default, onEnter: _requireAuth2.default }),
@@ -25533,6 +25539,12 @@
 	      _react2.default.createElement(
 	        'ul',
 	        null,
+	        '\u3000\u3000',
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/signup' },
+	          'Sign up'
+	        ),
 	        this.state.loggedIn ? _react2.default.createElement(
 	          _reactRouter.Link,
 	          { to: '/logout' },
@@ -27437,6 +27449,36 @@
 	  value: true
 	});
 
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'Signup',
+	  getInitialState: function getInitialState() {
+	    return {};
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      'Sign Up!'
+	    );
+	  }
+	});
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _auth = __webpack_require__(224);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -27475,7 +27517,7 @@
 	});
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
