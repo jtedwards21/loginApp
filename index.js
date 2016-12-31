@@ -3,8 +3,6 @@ import { render } from 'react-dom'
 import { Router, Route, browserHistory, IndexRoute, withRouter } from 'react-router'
 import App from './modules/App'
 import About from './modules/About'
-import Repos from './modules/Repos'
-import Repo from './modules/Repo'
 import Home from './modules/Home'
 import Login from './modules/Login'
 import Logout from './modules/Logout'
@@ -42,9 +40,6 @@ render((
       <Route path="/login" component={Login}/>
       <Route path="/logout" component={Logout}/>
       <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}/>
-      <Route path="/repos" component={Repos}>
-        <Route path="/repos/:userName/:repoName" component={Repo}/>
-      </Route>
       <Route token={getToken} path="/about"component={About}/>
     </Route>
   </Router>

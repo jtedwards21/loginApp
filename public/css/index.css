@@ -33,6 +33,11 @@ body {
   color: purple;
 }
 
+.section-title{
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
 #nav-container {
   position: absolute;
 }

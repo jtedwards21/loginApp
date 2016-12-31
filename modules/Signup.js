@@ -7,8 +7,8 @@ export default React.createClass({
   render(){
     return (
     <div>
-        <div className="center-text">Sign Up!</div>
-	<form className="form-horizontal">
+        <div className="col-sm-12 text-center section-title">Sign Up!</div>
+	<form className="col-sm-8 col-sm-offset-2 form-horizontal">
 	  <div className="form-group">
             <label for="inputEmail" className="col-sm-2 control-label">Email</label>
 	    <div className="col-sm-10">

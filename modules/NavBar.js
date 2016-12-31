@@ -6,6 +6,11 @@ export default React.createClass({
     return {}
   },
   render(){
+      var loginLink 
+      if(this.props.loggedIn){
+        loginLink = (<li><Link to="/logout">Log out</Link></li>)
+      } else {(<li><Link to="/login">Sign in</Link></li>)}
+
     return (
 <nav className="navbar navbar-default">
   <div className="container-fluid">
@@ -21,7 +26,7 @@ export default React.createClass({
 
     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul className="nav navbar-nav">
-        <li className="active"><a href="#">Link <span className="sr-only">(current)</span></a></li>
+        <li className="active"><Link to="/about">About <span className="sr-only">(current)</span></Link></li>
         <li><Link to="/dashboard" href="#">Dashboard</Link></li>
         <li className="dropdown">
           <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
@@ -42,8 +47,7 @@ export default React.createClass({
           <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-menu-hamburger"></span> <span className="caret"></span></a>
           <ul className="dropdown-menu">
             <li><Link to="/signup">Sign Up</Link></li>
-            <li><Link to="/signin">Sign In</Link></li>
-            <li><Link to="/logout">Log Out</Link></li>
+	　　　　{loginLink}
             <li role="separator" className="divider"></li>
             <li><a href="#">Separated link</a></li>
           </ul>
