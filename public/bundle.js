@@ -58,19 +58,11 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _About = __webpack_require__(250);
+	var _About = __webpack_require__(251);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _Repos = __webpack_require__(251);
-
-	var _Repos2 = _interopRequireDefault(_Repos);
-
-	var _Repo = __webpack_require__(252);
-
-	var _Repo2 = _interopRequireDefault(_Repo);
-
-	var _Home = __webpack_require__(253);
+	var _Home = __webpack_require__(252);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
@@ -133,11 +125,6 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _Login2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/logout', component: _Logout2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _Dashboard2.default, onEnter: _requireAuth2.default }),
-	    _react2.default.createElement(
-	      _reactRouter.Route,
-	      { path: '/repos', component: _Repos2.default },
-	      _react2.default.createElement(_reactRouter.Route, { path: '/repos/:userName/:repoName', component: _Repo2.default })
-	    ),
 	    _react2.default.createElement(_reactRouter.Route, { token: getToken, path: '/about', component: _About2.default })
 	  )
 	), document.getElementById('app'));
@@ -25516,96 +25503,62 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
+	var _NavBar = __webpack_require__(250);
+
+	var _NavBar2 = _interopRequireDefault(_NavBar);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
 	  displayName: 'App',
 	  getInitialState: function getInitialState() {
-	    return { loggedIn: _auth2.default.loggedIn(), token: {} };
+	    return { loggedIn: _auth2.default.loggedIn(), places: {} };
 	  },
 	  updateAuth: function updateAuth(loggedIn) {
 	    this.setState({ loggedIn: loggedIn });
 	  },
-	  componentDidMount: function componentDidMount() {},
+	  getPlaces: function getPlaces(token) {
+	    var url = '/yelp/search/' + token;
+
+	    var callback = function callback(data) {
+	      console.log(data);
+	    };
+
+	    (0, _axios2.default)(url).then(function (data) {
+	      callback(data);
+	    });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var url = '/yelp/token';
+	    var that = this;
+	    var callback = function callback(data) {
+	      var token = data.data.access_token;
+	      that.getPlaces(token);
+	    };
+
+	    (0, _axios2.default)(url).then(function (data) {
+	      callback(data);
+	    });
+	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
 	      null,
 	      _react2.default.createElement(
-	        'h1',
-	        null,
-	        'React Router Login'
-	      ),
-	      _react2.default.createElement(
-	        'ul',
-	        null,
-	        '\u3000\u3000',
+	        'div',
+	        { id: 'main-container', className: 'container' },
+	        _react2.default.createElement(_NavBar2.default, { loggedIn: this.state.loggedIn }),
 	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/signup' },
-	          'Sign up'
-	        ),
-	        this.state.loggedIn ? _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/logout' },
-	          'Log out'
-	        ) : _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/login' },
-	          'Sign in'
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'h1',
+	            { id: 'title', className: 'text-center col-sm-12' },
+	            'What\'s Goin\' On Tonight?'
+	          ),
+	          this.props.children
 	        )
-	      ),
-	      this.state.loggedIn ? _react2.default.createElement(
-	        'p',
-	        null,
-	        'You are logged in'
-	      ) : _react2.default.createElement(
-	        'p',
-	        null,
-	        'You are not logged in'
-	      ),
-	      _react2.default.createElement(
-	        'ul',
-	        { role: 'nav' },
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            _NavLink2.default,
-	            { to: '/', onlyActiveOnIndex: true },
-	            'Home'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            _NavLink2.default,
-	            { to: '/dashboard' },
-	            'Dashboard'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            _NavLink2.default,
-	            { to: '/about' },
-	            'About'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            _NavLink2.default,
-	            { to: '/repos' },
-	            'Repos'
-	          )
-	        )
-	      ),
-	      this.state.response,
-	      this.props.children
+	      )
 	    );
 	  }
 	});
@@ -27195,6 +27148,226 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(159);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'NavBar',
+	  getInitialState: function getInitialState() {
+	    return {};
+	  },
+	  render: function render() {
+	    var loginLink;
+	    if (this.props.loggedIn) {
+	      loginLink = _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/logout' },
+	          'Log out'
+	        )
+	      );
+	    } else {
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/login' },
+	          'Sign in'
+	        )
+	      );
+	    }
+
+	    return _react2.default.createElement(
+	      'nav',
+	      { className: 'navbar navbar-default\u3000navbar-fixed-top' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'container-fluid' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'navbar-header' },
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'sr-only' },
+	              'Toggle navigation'
+	            ),
+	            _react2.default.createElement('span', { className: 'icon-bar' }),
+	            _react2.default.createElement('span', { className: 'icon-bar' }),
+	            _react2.default.createElement('span', { className: 'icon-bar' })
+	          ),
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { className: 'navbar-brand', to: '/' },
+	            _react2.default.createElement('span', { id: 'glass', className: 'glyphicon glyphicon-glass' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+	          _react2.default.createElement(
+	            'ul',
+	            { className: 'nav navbar-nav' },
+	            _react2.default.createElement(
+	              'li',
+	              { className: 'active' },
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/about' },
+	                'About ',
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'sr-only' },
+	                  '(current)'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/dashboard', href: '#' },
+	                'Dashboard'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              { className: 'dropdown' },
+	              _react2.default.createElement(
+	                'a',
+	                { href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+	                'Dropdown ',
+	                _react2.default.createElement('span', { className: 'caret' })
+	              ),
+	              _react2.default.createElement(
+	                'ul',
+	                { className: 'dropdown-menu' },
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Action'
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Another action'
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Something else here'
+	                  )
+	                ),
+	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Separated link'
+	                  )
+	                ),
+	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'One more separated link'
+	                  )
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            { className: 'nav navbar-nav navbar-right' },
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              _react2.default.createElement(
+	                'a',
+	                { href: '#' },
+	                'Link'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              { className: 'dropdown' },
+	              _react2.default.createElement(
+	                'a',
+	                { href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-menu-hamburger' }),
+	                ' ',
+	                _react2.default.createElement('span', { className: 'caret' })
+	              ),
+	              _react2.default.createElement(
+	                'ul',
+	                { className: 'dropdown-menu' },
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/signup' },
+	                    'Sign Up'
+	                  )
+	                ),
+	                '\u3000\u3000\u3000\u3000',
+	                loginLink,
+	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#' },
+	                    'Separated link'
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
 	var _axios = __webpack_require__(225);
 
 	var _axios2 = _interopRequireDefault(_axios);
@@ -27215,64 +27388,6 @@
 	});
 
 /***/ },
-/* 251 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _NavLink = __webpack_require__(223);
-
-	var _NavLink2 = _interopRequireDefault(_NavLink);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-	  displayName: 'Repos',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        'h2',
-	        null,
-	        'Repos'
-	      ),
-	      _react2.default.createElement(
-	        'ul',
-	        null,
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            _NavLink2.default,
-	            { to: '/repos/reactjs/react-router' },
-	            'React Router'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            _NavLink2.default,
-	            { to: '/repos/facebook/react' },
-	            'React'
-	          )
-	        )
-	      ),
-	      this.props.children
-	    );
-	  }
-	});
-
-/***/ },
 /* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -27286,19 +27401,28 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Place = __webpack_require__(253);
+
+	var _Place2 = _interopRequireDefault(_Place);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
-	  displayName: 'Repo',
+	  displayName: 'Home',
+	  getInitialState: function getInitialState() {
+	    //Show some places
+	    return {};
+	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      null,
+	      { className: 'col-sm-12', id: 'home' },
 	      _react2.default.createElement(
-	        'h2',
-	        null,
-	        this.props.params.repoName
-	      )
+	        'div',
+	        { className: 'section-title text-center' },
+	        'Home'
+	      ),
+	      _react2.default.createElement('div', { id: 'places' })
 	    );
 	  }
 	});
@@ -27320,13 +27444,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
-	  displayName: 'Home',
+	  displayName: 'Place',
+	  getInitialState: function getInitialState() {
+	    return {};
+	  },
 	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'Home'
-	    );
+	    return _react2.default.createElement('div', null);
 	  }
 	});
 
@@ -27443,10 +27566,10 @@
 /* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+			value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -27456,17 +27579,53 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
-	  displayName: 'Signup',
-	  getInitialState: function getInitialState() {
-	    return {};
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      'Sign Up!'
-	    );
-	  }
+			displayName: "Signup",
+			getInitialState: function getInitialState() {
+					return {};
+			},
+			render: function render() {
+					return _react2.default.createElement(
+							"div",
+							null,
+							_react2.default.createElement(
+									"div",
+									{ className: "col-sm-12 text-center section-title" },
+									"Sign Up!"
+							),
+							_react2.default.createElement(
+									"form",
+									{ className: "col-sm-8 col-sm-offset-2 form-horizontal" },
+									_react2.default.createElement(
+											"div",
+											{ className: "form-group" },
+											_react2.default.createElement(
+													"label",
+													{ "for": "inputEmail", className: "col-sm-2 control-label" },
+													"Email"
+											),
+											_react2.default.createElement(
+													"div",
+													{ className: "col-sm-10" },
+													_react2.default.createElement("input", { type: "email", className: "form-control", id: "inputEmail", placeholder: "Email" })
+											)
+									),
+									_react2.default.createElement(
+											"div",
+											{ className: "form-group" },
+											_react2.default.createElement(
+													"label",
+													{ "for": "inputPassword", className: "col-sm-2 control-label" },
+													"Password"
+											),
+											_react2.default.createElement(
+													"div",
+													{ className: "col-sm-10" },
+													_react2.default.createElement("input", { type: "password", className: "form-control", id: "inputPassword", placeholder: "Password" })
+											)
+									)
+							)
+					);
+			}
 	});
 
 /***/ },

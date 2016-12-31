@@ -26,20 +26,19 @@ app.get('/yelp/token', function (req, res) {
     request.post({url:url, form:form}, callback);
 })
 
-app.get('/yelp/search/', function (req, res) {
+app.get('/yelp/search/:token', function (req, res) {
     var baseUrl = 'https://api.yelp.com/v3/businesses/search';
 
     var options = {
       url: 'https://api.yelp.com/v3/businesses/search?term=food&latitude=37.786882&longitude=-122.399972',	
       headers: {
-        'Authorization': 'Bearer qTUxsA2qrcRHmShGCMWtfjlfSbg_p-smWEWHyRAAZxJSgP2hMqw-h0jQvbpNU9nxPLP9JettTNEm_9313SucHlYB0yj1GvlM1lsU1O7adxzhwRuYJWDh7sP1px9mWHYx'
+        'Authorization': 'Bearer ' + req.params.token
        }
     };
     
     var callback = function(err, httpResponse, body){
       res.send(body)
     };
-    console.log('r');
     request(options, callback);
 })
 
